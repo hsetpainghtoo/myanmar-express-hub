@@ -12,7 +12,6 @@ export async function generateAIResponse(
   chatHistory: ChatMessage[]
 ): Promise<string> {
   try {
-    console.log(process.env.GROQ_API_KEY, "API Key")
     // Try to use Groq API directly
     const response = await fetch(
       "https://api.groq.com/openai/v1/chat/completions",
@@ -23,7 +22,7 @@ export async function generateAIResponse(
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          model: "llama3-70b-8192",
+          model: "llama-3.3-70b-versatile",
           messages: [
             {
               role: "system",
@@ -67,6 +66,8 @@ export async function generateAIResponse(
         }),
       }
     );
+
+    console.log("API response:", response);
 
     if (response.ok) {
       const data = await response.json();
